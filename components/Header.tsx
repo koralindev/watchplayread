@@ -1,0 +1,11 @@
+export const Header = () => {
+    return(
+        <header className="flex justify-between items-center p-8">
+            <div className="mx-8"><div className="cursor-pointer">WatchPlayRead</div></div>     
+            <ul className="flex justify-between gap-2"><li className="cursor-pointer">Игры</li>
+            <li className="cursor-pointer">Фильмы</li>
+            <li className="cursor-pointer">Книги</li></ul>           
+            <div className="cursor-pointer">ЛК</div>
+        </header>
+    );
+};
