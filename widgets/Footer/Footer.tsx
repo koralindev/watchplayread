@@ -1,7 +1,7 @@
 export const Footer = () => {
-    return(
-        <footer className="bg-cyan-900 flex justify-end p-6">
-            <div>WatchPlayRead. 2026</div>
-        </footer>
-    )
+  return (
+    <footer className="bg-chart-5 flex justify-end p-6">
+      <div className="font-hachi">WatchPlayRead. 2026</div>
+    </footer>
+  );
 };
