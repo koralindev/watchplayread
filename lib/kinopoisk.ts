@@ -1,23 +1,28 @@
 import { MoviesResponse } from "@/types/movie";
 
-export const POISKKINO_API_KEY = process.env.POISKKINO_API_KEY;
-export const POISKKINO_BASE_URL = "https://api.poiskkino.dev/v1.5";
+export const KINOPOISK_API_KEY = process.env.KINOPOISK_API_KEY;
+export const KINOPOISK_BASE_URL =
+  "https://kinopoiskapiunofficial.tech/api/v2.2/films";
 
-export async function fetchPopularMovies(
-  page: number = 1,
-): Promise<MoviesResponse> {
+export async function fetchTrending(page: number = 1): Promise<MoviesResponse> {
+  if (!KINOPOISK_API_KEY) {
+    throw new Error("API KEY is not defined");
+  }
+
   const res = await fetch(
-    `${POISKKINO_BASE_URL}/movie?selectFields=id%2Cname%2Ctype%2Crating%2CratingMpaa%2Cgenres%2Cposter%2Ctop250%2Cwatchability&notNullFields=name%2Cposter.url&limit=50`,
+    `${KINOPOISK_BASE_URL}/collections?type=TOP_POPULAR_ALL&page=${page}`,
     {
+      method: "GET",
       headers: {
-        "X-API-KEY": POISKKINO_API_KEY as string,
+        "X-API-KEY": "1d65fd8e-ac5b-4bdc-8988-a7a1fe68ca48",
+        "Content-Type": "application/json",
       },
-      cache: "no-store",
     },
   );
 
   if (!res.ok) {
-    throw new Error("Ошибка при получении фильмов");
+    throw new Error(`Fetch error: ${res.status}`);
   }
+
   return res.json();
 }
