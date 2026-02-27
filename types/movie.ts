@@ -41,3 +41,12 @@ export interface GenreTMDB {
   id: number;
   name: string;
 }
+
+export interface MovieTMBD {
+  genres: GenreTMDB[];
+  id: number;
+  original_title?: string;
+  title?: string;
+  original_name?: string;
+  name?: string;
+}

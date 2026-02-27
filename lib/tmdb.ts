@@ -1,21 +1,29 @@
 import { GenreTMDB, MovieTMDB } from "@/types/movie";
 
-export const TMDB_API_KEY = process.env.TMDB_API_KEY;
-export const TMDB_BASE_URL = "https://api.themoviedb.org/3";
+const TMDB_API_KEY = process.env.TMDB_API_KEY;
+const TMDB_BASE_URL = "https://api.themoviedb.org/3";
+
+const options = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization: `Bearer ${TMDB_API_KEY}`,
+  },
+};
 
 export default async function getGenres(type: string): Promise<GenreTMDB[]> {
   const res = await fetch(
     `${TMDB_BASE_URL}/genre/${type}/list?api_key=${TMDB_API_KEY}&language=ru-RU`,
-    {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${TMDB_API_KEY}`,
-      },
-    },
-  ).then((res) => res.json());
+    options,
+  );
 
-  return res.genres;
+  if (!res.ok) {
+    throw new Error(`TMDB error: ${res.status} ${res.statusText}`);
+  }
+
+  const data = await res.json();
+
+  return data.genres ?? [];
 }
 
 export async function fetchTrending(page: number = 1): Promise<MovieTMDB[]> {
@@ -25,16 +33,30 @@ export async function fetchTrending(page: number = 1): Promise<MovieTMDB[]> {
 
   const res = await fetch(
     `${TMDB_BASE_URL}/trending/all/week?api_key=${TMDB_API_KEY}&language=ru-RU&page=${page}`,
-    {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${TMDB_API_KEY}`,
-      },
-    },
-  )
-    .then((res) => res.json())
-    .catch((err) => err.message);
+    options,
+  );
 
-  return res.results;
+  if (!res.ok) {
+    throw new Error(`TMDB error: ${res.status} ${res.statusText}`);
+  }
+
+  const data = await res.json();
+
+  return data.results ?? [];
+}
+
+export async function fetchMovie(id: number): Promise<MovieTMDB> {
+  if (!TMDB_API_KEY) {
+    throw new Error("API KEY is not defined");
+  }
+
+  const res = await fetch(`${TMDB_BASE_URL}/movie/${id}`, options);
+
+  if (!res.ok) {
+    throw new Error(`TMDB error: ${res.status} ${res.statusText}`);
+  }
+
+  const data = await res.json();
+
+  return data;
 }
