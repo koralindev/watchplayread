@@ -1,5 +1,5 @@
 import { Header } from "@/widgets/Header/Header";
-import {Footer} from "@/widgets/Footer/Footer";
+import { Footer } from "@/widgets/Footer/Footer";
 import "./globals.css";
 
 export default function RootLayout({
@@ -9,10 +9,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" className="dark">
-      <body suppressHydrationWarning >
+      <body suppressHydrationWarning>
         <Header />
-          {children}
-        <Footer />
+        {children}
       </body>
     </html>
   );
