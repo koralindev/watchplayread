@@ -1,5 +1,12 @@
 "use client";
 
+/*
+TODO:
+1. Добавить анимацию при hover
+2. Добавить анимацию "выдвижения" менюшки
+3. Анимация при hover на Logout
+*/
+
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Home07Icon } from "@/components/icons/hugeicons-home-07";
@@ -8,12 +15,36 @@ import { BookOpen02Icon } from "@/components/icons/hugeicons-book-open-02";
 import { GameController03Icon } from "@/components/icons/hugeicons-game-controller-03";
 import { Logout05Icon } from "@/components/icons/hugeicons-logout-05";
 import { Tv01Icon } from "@/components/icons/hugeicons-tv-01";
+import { NavItem } from "@/components/ui/NavItem";
 
 export const Header = () => {
-  const pathname = usePathname();
-  const router = useRouter();
-
-  const current = pathname.split("/")[1] || "games";
+  const menu = [
+    {
+      title: "Главная",
+      icon: Home07Icon,
+      href: "/",
+    },
+    {
+      title: "Кино",
+      icon: FilmRoll02Icon,
+      href: "/movies",
+    },
+    {
+      title: "Сериалы",
+      icon: Tv01Icon,
+      href: "/series",
+    },
+    {
+      title: "Книги",
+      icon: BookOpen02Icon,
+      href: "/books",
+    },
+    {
+      title: "Игры",
+      icon: GameController03Icon,
+      href: "/games",
+    },
+  ];
 
   return (
     <header className="fixed flex flex-col w-[238px] h-screen bg-[#212121] rounded-r-[45px] pt-10 pb-18">
@@ -29,31 +60,14 @@ export const Header = () => {
           Viewniverse
         </div>
       </div>
-      <nav className="ml-10 text-2xl text-[#666666] mt-12 flex flex-col flex-1">
-        <ul className="">
-          <li className="flex pt-8 pb-8 items-start">
-            <Home07Icon className="stroke-[#666666] mr-3 w-7 h-7" />
-            Главная
-          </li>
-          <li className="flex pt-8 pb-8 items-center">
-            <FilmRoll02Icon className="stroke-[#666666] mr-3 w-7 h-7" />
-            Кино
-          </li>
-          <li className="flex pt-8 pb-8 items-start">
-            <Tv01Icon className="stroke-[#666666] mr-3 w-7 h-7" />
-            Сериалы
-          </li>
-          <li className="flex pt-8 pb-8 items-start">
-            <BookOpen02Icon className="stroke-[#666666] mr-3 w-7 h-7" />
-            Книги
-          </li>
-          <li className="flex pt-8 pb-8 items-start">
-            <GameController03Icon className="stroke-[#666666] mr-3 w-7 h-7" />
-            Игры
-          </li>
+      <nav className="text-2xl mt-12 flex flex-col flex-1">
+        <ul className="font-semibold">
+          {menu.map((item) => (
+            <NavItem key={item.title} title={item.title} icon={item.icon} />
+          ))}
         </ul>
-        <button className="mt-auto flex items-center pb-8">
-          <Logout05Icon className="stroke-[#666666] mr-3 w-7 h-7" />
+        <button className="mt-auto flex items-center pl-10 cursor-pointer hover:border-b">
+          <Logout05Icon className=" mr-3 w-7 h-7" />
           Выйти
         </button>
       </nav>
