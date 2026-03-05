@@ -1,5 +1,5 @@
 import { StarIcon } from "@/components/icons/hugeicons-star";
-import getGenres, { fetchTrending } from "@/lib/tmdb";
+import getGenres, { fetchTrending } from "@/lib/tmdbMovie";
 import Image from "next/image";
 import Link from "next/link";
 
